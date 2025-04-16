@@ -41,9 +41,9 @@ const DropdownMenu = ({ title, menu }) => {
                             color: 'text.primary',
                             cursor: 'pointer'
                         }}
-                        id="column-dropdown"
+                        id='column-dropdown'
                         aria-controls={open ? 'menu-dropdown' : undefined}
-                        aria-haspopup="true"
+                        aria-haspopup='true'
                         aria-expanded={open ? 'true' : undefined}
                         onClick={handleClick}
                     />
@@ -68,7 +68,7 @@ const DropdownMenu = ({ title, menu }) => {
                 open={open}
                 onClose={handleClose}
             >
-                {menu.length > 0 && menu.map(item => {
+                {menu && menu.length > 0 && menu.map(item => {
                     if (item.type === 'divider') return item.icons;
                     if (item.type === 'personal') return (
                         <MenuItem key={item.id} onClick={handleClose}>
