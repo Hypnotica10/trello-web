@@ -1,11 +1,10 @@
-import AppBar from "@components/AppBar"
-
+import Board from '@boards/Board'
 
 function App() {
 
   return (
     <>
-      <AppBar />
+      <Board />
     </>
   )
 }

@@ -6,10 +6,10 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme.js';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <ThemeProvider theme={theme} defaultMode="dark">
+  // <StrictMode>
+    <ThemeProvider theme={theme} defaultMode='dark'>
       <CssBaseline />
       <App />
     </ThemeProvider>
-  </StrictMode>,
+  // </StrictMode>,
 )

@@ -14,8 +14,8 @@
             "@auth/*": [
                 "pages/auth/*"
             ],
-            "@ultils/*": [
-                "ultils/*"
+            "@utils/*": [
+                "utils/*"
             ],
             "@assets/*": [
                 "assets/*"

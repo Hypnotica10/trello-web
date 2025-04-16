@@ -3,10 +3,10 @@ export const mockData = {
         _id: 'board-id-01',
         title: 'Clone trello',
         description: 'todo app high level',
-        type: 'public', 
-        ownerIds: [], 
-        memberIds: [], 
-        columnOrderIds: ['column-id-01', 'column-id-02', 'column-id-03'], 
+        type: 'public',
+        ownerIds: [],
+        memberIds: [],
+        columnOrderIds: ['column-id-01', 'column-id-02', 'column-id-03'],
         columns: [
             {
                 _id: 'column-id-01',
@@ -61,9 +61,18 @@ export const mockData = {
                 title: 'Done Column 03',
                 cardOrderIds: ['card-id-11', 'card-id-12', 'card-id-13'],
                 cards: [
-                    { _id: 'card-id-12', boardId: 'board-id-01', columnId: 'column-id-03', title: 'Title of card 11', description: null, cover: null, memberIds: [], comments: [], attachments: [] },
-                    { _id: 'card-id-13', boardId: 'board-id-01', columnId: 'column-id-03', title: 'Title of card 12', description: null, cover: null, memberIds: [], comments: [], attachments: [] },
-                    { _id: 'card-id-14', boardId: 'board-id-01', columnId: 'column-id-03', title: 'Title of card 13', description: null, cover: null, memberIds: [], comments: [], attachments: [] }
+                    { _id: 'card-id-12', boardId: 'board-id-01', columnId: 'column-id-03', title: 'Title of card 12', description: null, cover: null, memberIds: [], comments: [], attachments: [] },
+                    { _id: 'card-id-13', boardId: 'board-id-01', columnId: 'column-id-03', title: 'Title of card 13', description: null, cover: null, memberIds: [], comments: [], attachments: [] },
+                    { _id: 'card-id-14', boardId: 'board-id-01', columnId: 'column-id-03', title: 'Title of card 14', description: null, cover: null, memberIds: [], comments: [], attachments: [] }
+                ]
+            },
+            {
+                _id: 'column-id-04',
+                boardId: 'board-id-01',
+                title: 'Empty Column 04',
+                cardOrderIds: ['column-id-04-placeholer-card'],
+                cards: [
+                    { _id: 'column-id-04-placeholer-card', boardId: 'board-id-01', columnId: 'column-id-04', FE_PlaceholderCard: true },
                 ]
             }
         ]

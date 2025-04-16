@@ -20,13 +20,13 @@ function ModeSwitch() {
     }
 
     return (
-        <FormControl size="small" sx={{ display: { xs: 'none', sm: 'inline-block' } }}>
-            <InputLabel id="theme-mode">Mode</InputLabel>
+        <FormControl size='small' sx={{ display: { xs: 'none', sm: 'inline-block' } }}>
+            <InputLabel id='theme-mode'>Mode</InputLabel>
             <Select
-                labelId="theme-mode"
-                id="select-dark-light-mode"
+                labelId='theme-mode'
+                id='select-dark-light-mode'
                 value={mode}
-                label="mode"
+                label='mode'
                 onChange={handleChange}
             >
                 <MenuItem value='light'>

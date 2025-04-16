@@ -1,28 +1,28 @@
 import TrelloIcon from '@assets/trello.svg?react';
+import DropdownMenu from '@components/DropdownMenu';
+import ModeSwitch from '@components/ModeSwitch';
 import AppsIcon from '@mui/icons-material/Apps';
 import CloseIcon from '@mui/icons-material/Close';
+import Cloud from '@mui/icons-material/Cloud';
+import ContentCopy from '@mui/icons-material/ContentCopy';
+import ContentCut from '@mui/icons-material/ContentCut';
+import ContentPaste from '@mui/icons-material/ContentPaste';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import Logout from '@mui/icons-material/Logout';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import PersonAdd from '@mui/icons-material/PersonAdd';
 import SearchIcon from '@mui/icons-material/Search';
+import Settings from '@mui/icons-material/Settings';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 import InputAdornment from '@mui/material/InputAdornment';
 import SvgIcon from '@mui/material/SvgIcon';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import DropdownMenu from './DropdownMenu';
-import ModeSwitch from './ModeSwitch';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import ContentCut from '@mui/icons-material/ContentCut';
-import ContentPaste from '@mui/icons-material/ContentPaste';
-import Divider from '@mui/material/Divider';
-import Cloud from '@mui/icons-material/Cloud';
-import Logout from '@mui/icons-material/Logout';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
 import { useState } from 'react';
 
 const MENU = [
@@ -130,7 +130,7 @@ const AppBar = () => {
                     <DropdownMenu title='Starred' menu={MENU} />
                     <DropdownMenu title='Templates' menu={MENU} />
                     <Button
-                        variant="outlined"
+                        variant='outlined'
                         startIcon={<LibraryAddIcon />}
                         sx={{
                             color: 'primary.contrastText',
@@ -147,9 +147,9 @@ const AppBar = () => {
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <TextField
-                    id="outlined-search"
-                    label="Search"
-                    type="text"
+                    id='outlined-search'
+                    label='Search'
+                    type='text'
                     value={searchString}
                     onChange={handleOnChangeSearch}
                     size='small'
@@ -157,7 +157,7 @@ const AppBar = () => {
                     slotProps={{
                         input: {
                             startAdornment: (
-                                <InputAdornment position="start">
+                                <InputAdornment position='start'>
                                     <SearchIcon sx={{ cursor: 'pointer', color: 'primary.contrastText' }} />
                                 </InputAdornment>
                             ),
@@ -179,7 +179,7 @@ const AppBar = () => {
                     <SearchIcon sx={{ cursor: 'pointer', color: 'primary.contrastText', display: { sm: 'none' } }} />
                 </Tooltip>
                 <Tooltip title='Notification'>
-                    <Badge color="secondary" variant="dot" sx={{ cursor: 'pointer', color: 'primary.contrastText' }}>
+                    <Badge color='secondary' variant='dot' sx={{ cursor: 'pointer', color: 'primary.contrastText' }}>
                         <NotificationsNoneIcon />
                     </Badge>
                 </Tooltip>
