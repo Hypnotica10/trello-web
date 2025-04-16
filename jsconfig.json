@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src/",
+        "paths": {
+            // "~/*": [
+            //     "./src/*"
+            // ],
+            "@boards/*": [
+                "pages/boards/*"
+            ],
+            "@components/*": [
+                "components/*"
+            ],
+            "@auth/*": [
+                "pages/auth/*"
+            ],
+            "@ultils/*": [
+                "ultils/*"
+            ],
+            "@assets/*": [
+                "assets/*"
+            ],
+            "@api/*": [
+                "api/*"
+            ],
+        },
+    },
+}
