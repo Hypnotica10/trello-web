@@ -1,13 +1,19 @@
-import CardOverlay from '@components/CardOverlay';
-import ColumnOverlay from '@components/ColumnOverlay';
+import Card from '@components/Card';
+import Column from '@components/Column';
 import ListColumns from '@components/ListColumns';
-import { closestCorners, defaultDropAnimationSideEffects, DndContext, DragOverlay, getFirstCollision, MouseSensor, pointerWithin, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { closestCorners, defaultDropAnimationSideEffects, DndContext, DragOverlay, getFirstCollision, MouseSensor, pointerWithin, rectIntersection, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import Box from '@mui/material/Box';
 import { sortObjectByOrder } from '@utils/algorithm';
 import { generatePlaceholderCard } from '@utils/formatters';
 import { cloneDeep, isEmpty } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+
+const ITEM_TYPE = {
+    COLUMN: 'column',
+    CARD: 'CARD'
+}
 
 const BoardContent = ({ board }) => {
     const mouseSensor = useSensor(MouseSensor, {
@@ -27,6 +33,7 @@ const BoardContent = ({ board }) => {
     const [activeDragItemData, setActiveDragItemData] = useState(null);
     const [oldColumn, setOldColumn] = useState(null);
     const [orderedColumns, setOrderedColumns] = useState([]);
+    const [itemDragType, setItemDragType] = useState(null);
     const lastOverId = useRef(null)
     useEffect(() => {
         setOrderedColumns(sortObjectByOrder(board?.columns, board?.columnOrderIds, '_id'));
@@ -80,6 +87,7 @@ const BoardContent = ({ board }) => {
     }
 
     const handleDragStart = (e) => {
+        setItemDragType(e?.active?.data?.current?.columnId ? ITEM_TYPE.CARD : ITEM_TYPE.COLUMN);
         setActiveDragItemData(e?.active?.data.current);
         if (e?.active?.data?.current?.columnId) {
             setOldColumn(findColumnByCardId(e?.active?.id))
@@ -89,7 +97,7 @@ const BoardContent = ({ board }) => {
     const handleDragOver = (e) => {
 
         // If drag column return
-        if (!activeDragItemData?.columnId) return;
+        if (itemDragType === ITEM_TYPE.COLUMN) return;
 
         const { active, over } = e;
         if (!over || !active) {
@@ -125,7 +133,7 @@ const BoardContent = ({ board }) => {
             return;
         }
 
-        if (activeDragItemData?.columnId && active.id !== over.id) {
+        if (itemDragType === ITEM_TYPE.CARD && active.id !== over.id) {
             const { id: activeCardId, data: { current: activeCardData } } = active;
             const { id: overCardId } = over;
 
@@ -151,19 +159,19 @@ const BoardContent = ({ board }) => {
                 const oldIndex = oldColumn?.cards.findIndex(card => card._id === activeDragItemData._id);
                 // new coordinate
                 const newIndex = overColumn?.cards.findIndex(card => card._id === overCardId);
-                const dndOrderedCards = arrayMove(oldColumn?.cards, oldIndex, newIndex);
-                setOrderedColumns(orderedColumns => {
-                    const newColumns = cloneDeep(orderedColumns);
-                    const newOverColumn = newColumns.find(column => column._id === overColumn._id);
-                    newOverColumn.cards = dndOrderedCards;
-                    newOverColumn.cardOrderIds = dndOrderedCards.map(card => card._id);
-                    return newColumns;
-                })
+                const dndOrderedCards = arrayMove(oldColumn.cards, oldIndex, newIndex);
+                setOrderedColumns(orderedColumns => ({
+                    ...orderedColumns,
+                    [overColumn]: {
+                        cards: dndOrderedCards,
+                        cardOrderIds: dndOrderedCards.map(card => card._id)
+                    }
+                }))
             }
         }
 
         // active is id of column drag and over is id of column drop 
-        if (!activeDragItemData?.columnId && active.id !== over.id) {
+        if (itemDragType === ITEM_TYPE.COLUMN && active.id !== over.id) {
             // old coordinate
             const oldIndex = orderedColumns.findIndex(column => column._id === active.id);
             // new coordinate
@@ -188,7 +196,7 @@ const BoardContent = ({ board }) => {
     }
 
     const collisionDetectionStrategy = useCallback((args) => {
-        if (!activeDragItemData?.columnId) {
+        if (itemDragType === ITEM_TYPE.COLUMN) {
             return closestCorners({
                 ...args
             });
@@ -196,7 +204,7 @@ const BoardContent = ({ board }) => {
 
         const pointerIntersections = pointerWithin(args);
         if (!pointerIntersections.length) return;
-        const intersections = pointerIntersections;
+        const intersections = pointerIntersections.length ? pointerIntersections : rectIntersection(args);
         let overId = getFirstCollision(intersections, 'id');
         if (overId) {
             const checkColumn = orderedColumns.find(column => column._id === overId);
@@ -213,7 +221,7 @@ const BoardContent = ({ board }) => {
         }
 
         return lastOverId.current ? [{ id: lastOverId.current }] : []
-    }, [activeDragItemData?.columnId, orderedColumns])
+    }, [itemDragType, orderedColumns])
 
     return (
         <DndContext
@@ -232,15 +240,18 @@ const BoardContent = ({ board }) => {
             }}>
                 <ListColumns columns={orderedColumns} />
 
-                <DragOverlay dropAnimation={dropAnimation}>
-                    {!activeDragItemData && null}
-                    {(activeDragItemData && !activeDragItemData?.columnId) ? (
-                        <ColumnOverlay column={activeDragItemData} />
-                    ) : (
-                        <CardOverlay card={activeDragItemData} />
-                    )}
+                {createPortal(
+                    <DragOverlay dropAnimation={dropAnimation}>
+                        {!activeDragItemData && null}
+                        {(activeDragItemData && itemDragType === ITEM_TYPE.COLUMN) ? (
+                            <Column column={activeDragItemData} />
+                        ) : (
+                            <Card card={activeDragItemData} />
+                        )}
 
-                </DragOverlay>
+                    </DragOverlay>,
+                    document.body
+                )}
             </Box>
         </DndContext>
     );

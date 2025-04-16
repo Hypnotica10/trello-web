@@ -1,3 +1,4 @@
+import DropdownMenu from '@components/DropdownMenu';
 import ListCards from '@components/ListCards';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -13,7 +14,6 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import DropdownMenu from './DropdownMenu';
 
 const MENU = [
     {
@@ -85,7 +85,6 @@ const Column = ({ column }) => {
                     minWidth: '300px',
                     maxWidth: '300px',
                     bgcolor: 'secondary.main',
-                    ml: 2,
                     borderRadius: '6px',
                     height: 'fit-content',
                     maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`,

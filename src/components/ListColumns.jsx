@@ -7,14 +7,16 @@ import Button from '@mui/material/Button';
 const ListColumns = ({ columns }) => {
 
     return (
-        <SortableContext items={columns.map(column => column._id)} strategy={horizontalListSortingStrategy}>
+        <SortableContext items={columns?.map(column => column._id)} strategy={horizontalListSortingStrategy}>
             <Box sx={{
                 bgcolor: 'inherit',
                 widows: '100%',
                 height: '100%',
                 display: 'flex',
                 overflowX: 'auto',
-                overflowY: 'hidden'
+                overflowY: 'hidden',
+                gap: 2,
+                px: 2
             }}>
 
                 {/*Columm*/}
@@ -26,7 +28,6 @@ const ListColumns = ({ columns }) => {
                 <Box sx={{
                     minWidth: '200px',
                     maxWidth: '200px',
-                    mx: 2,
                     borderRadius: '6px',
                     height: 'fit-content',
                     bgcolor: '#ffffff3d'

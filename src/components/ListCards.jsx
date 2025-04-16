@@ -8,7 +8,6 @@ const CARDS_LIST_STYLES = {
     display: 'flex',
     flexDirection: 'column',
     gap: 2,
-    overflowX: 'hidden',
     overflowY: 'auto',
     maxHeight: (theme) => `calc(
         ${theme.trello.boardContentHeight} -
@@ -24,7 +23,7 @@ const CARDS_LIST_STYLES = {
 
 const ListCards = ({ cards }) => {
     return (
-        <SortableContext items={cards.map(column => column._id)} strategy={verticalListSortingStrategy}>
+        <SortableContext items={cards?.map(column => column._id)} strategy={verticalListSortingStrategy}>
             <Box sx={CARDS_LIST_STYLES}>
                 {cards && cards.map(card => (<Card key={card?._id} card={card} />))}
             </Box>
